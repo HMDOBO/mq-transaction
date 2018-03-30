@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!-- ==================================================================== -->
+	<!-- 龙果学院（ http://www.roncoo.com ）超级教程系列 -->
+	<!-- 《微服务架构的分布式事务解决方案》视频教程 -->
+	<!-- 讲师：吴水成（水到渠成），840765167@qq.com -->
+	<!-- 课程地址：http://www.roncoo.com/course/view/7ae3d7eddc4742f78b0548aa8bd9ccdb -->
+	<!-- ==================================================================== -->
+
+	<groupId>com.roncoo.pay.common</groupId>
+	<artifactId>roncoo-pay-dubbo</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>roncoo-pay-dubbo</name>
+
+	<modules>
+		
+		<!-- common -->
+		<module>roncoo-pay</module>
+		<module>roncoo-pay-common-core</module>
+		<module>roncoo-pay-common-config</module>
+		
+		<!-- service-api -->
+		<module>roncoo-pay-service-account-api</module>
+		<module>roncoo-pay-service-accounting-api</module>
+		<module>roncoo-pay-service-message-api</module>
+		<module>roncoo-pay-service-notify-api</module>
+		<module>roncoo-pay-service-trade-api</module>
+		<module>roncoo-pay-service-user-api</module>
+		
+		<!-- service -->
+		<module>roncoo-pay-service-account</module>
+		<module>roncoo-pay-service-accounting</module>
+		<module>roncoo-pay-service-message</module>
+		<module>roncoo-pay-service-notify</module>
+		<module>roncoo-pay-service-trade</module>
+		<module>roncoo-pay-service-user</module>
+		
+		<!-- app -->
+		<module>roncoo-pay-app-message</module>
+		<module>roncoo-pay-app-notify</module>
+		<module>roncoo-pay-app-queue</module>
+		
+		<!-- web -->
+		<module>roncoo-pay-web-boss</module>
+		<module>roncoo-pay-web-gateway</module>
+		<module>roncoo-pay-web-message</module>
+		<module>roncoo-pay-web-sample-shop</module>
+		
+	</modules>
+
+</project>
