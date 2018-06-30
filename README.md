@@ -16,13 +16,13 @@
 
 为什么spring本地事务不起作用，看下面例子
 
-public String createOrder() {
+	public String createOrder() {
 
-	orderService.createOrder();	// 创建订单
-	itemService.decrCount();	// 减库存
-	userAccountService.updateAccount();	//用户账户更新
+		orderService.createOrder();	// 创建订单
+		itemService.decrCount();	// 减库存
+		userAccountService.updateAccount();	//用户账户更新
 
-}
+	}
 
 假设上面三个操作都需要调用不同的服务，显然，当第三个操作用户账户更新失败时，前两个操作并不会回滚，因为并不是一个spring域
 
