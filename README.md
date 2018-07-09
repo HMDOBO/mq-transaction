@@ -17,14 +17,23 @@
 
 这便是微服务化分布式事务问题
 
-# 模拟分布式事务出现场景
+### 模拟分布式事务出现场景
 
 订单生成场景是经典的分布式事务出现场景
 
-创建父订单
-
-创建子订单
+创建订单
 
 记录购买信息
 
-减库存
+### 项目工程结构
+mq-transaction 父工程
+
+mq-transaction-common 公共工程
+
+mq-transaction-order 订单
+
+mq-transaction-item-api  
+mq-transaction-item 商品
+
+mq-transaction-message-api  
+mq-transaction-message 消息服务
