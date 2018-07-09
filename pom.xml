@@ -91,11 +91,17 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>1.1.0</version>
             </dependency>
-            <!--other-->
+            <!--dubbo-->
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.22</version>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>0.1.0</version>
+            </dependency>
+            <!--zookeeper-->
+            <dependency>
+                <groupId>com.101tec</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>0.10</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
