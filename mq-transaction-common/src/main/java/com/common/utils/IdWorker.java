@@ -1,4 +1,4 @@
-package com.mq.utils;
+package com.common.utils;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;

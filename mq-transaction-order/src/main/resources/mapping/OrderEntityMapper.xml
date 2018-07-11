@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.order.mapper.OrderEntityMapper">
+  <resultMap id="BaseResultMap" type="com.order.entity.OrderEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="user_id" />
+    <result column="item_id" jdbcType="BIGINT" property="item_id" />
+    <result column="item_name" jdbcType="VARCHAR" property="item_name" />
+    <result column="item_price" jdbcType="BIGINT" property="item_price" />
+    <result column="item_count" jdbcType="INTEGER" property="item_count" />
+    <result column="total_price" jdbcType="BIGINT" property="total_price" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, item_id, item_name, item_price, item_count, total_price, status, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mq_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mq_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.order.entity.OrderEntity">
+    insert into mq_order (id, user_id, item_id, 
+      item_name, item_price, item_count, 
+      total_price, status, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{user_id,jdbcType=BIGINT}, #{item_id,jdbcType=BIGINT}, 
+      #{item_name,jdbcType=VARCHAR}, #{item_price,jdbcType=BIGINT}, #{item_count,jdbcType=INTEGER}, 
+      #{total_price,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{update_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.order.entity.OrderEntity">
+    insert into mq_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="user_id != null">
+        user_id,
+      </if>
+      <if test="item_id != null">
+        item_id,
+      </if>
+      <if test="item_name != null">
+        item_name,
+      </if>
+      <if test="item_price != null">
+        item_price,
+      </if>
+      <if test="item_count != null">
+        item_count,
+      </if>
+      <if test="total_price != null">
+        total_price,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="user_id != null">
+        #{user_id,jdbcType=BIGINT},
+      </if>
+      <if test="item_id != null">
+        #{item_id,jdbcType=BIGINT},
+      </if>
+      <if test="item_name != null">
+        #{item_name,jdbcType=VARCHAR},
+      </if>
+      <if test="item_price != null">
+        #{item_price,jdbcType=BIGINT},
+      </if>
+      <if test="item_count != null">
+        #{item_count,jdbcType=INTEGER},
+      </if>
+      <if test="total_price != null">
+        #{total_price,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.order.entity.OrderEntity">
+    update mq_order
+    <set>
+      <if test="user_id != null">
+        user_id = #{user_id,jdbcType=BIGINT},
+      </if>
+      <if test="item_id != null">
+        item_id = #{item_id,jdbcType=BIGINT},
+      </if>
+      <if test="item_name != null">
+        item_name = #{item_name,jdbcType=VARCHAR},
+      </if>
+      <if test="item_price != null">
+        item_price = #{item_price,jdbcType=BIGINT},
+      </if>
+      <if test="item_count != null">
+        item_count = #{item_count,jdbcType=INTEGER},
+      </if>
+      <if test="total_price != null">
+        total_price = #{total_price,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.order.entity.OrderEntity">
+    update mq_order
+    set user_id = #{user_id,jdbcType=BIGINT},
+      item_id = #{item_id,jdbcType=BIGINT},
+      item_name = #{item_name,jdbcType=VARCHAR},
+      item_price = #{item_price,jdbcType=BIGINT},
+      item_count = #{item_count,jdbcType=INTEGER},
+      total_price = #{total_price,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
