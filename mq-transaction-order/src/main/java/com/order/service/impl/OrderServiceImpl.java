@@ -35,9 +35,20 @@ public class OrderServiceImpl implements OrderService {
             throw new OrderBizException(MsgCode.INSERT_RESULT_0);
 
         /*
-         * 1.
-         * 2.
-         * 3.
+         * 1. 创建订单
+         *
+         * 2. 调用购买记录服务，保存购买人信息
+         *
+         * 关键在于调用购买记录服务，spring本地事务无法使用
+         *
+         * 要实现程序的准确性，可用性，就需要解决这个问题
+         *
+         * 这里使用分布式事务解决方案之一 ———— 消息最终一致性解决方案
+         *
+         * 消息最终一致性：牺牲ACID中强一致性，保证系统最终一致，强调系统可用性。
+         *
+         * 下面，解决购买记录服务，然后集成dubbo，然后解决message消息服务、集成activeMQ
+         *
          */
 
         return ResponseMessage.success(orderId.toString());
