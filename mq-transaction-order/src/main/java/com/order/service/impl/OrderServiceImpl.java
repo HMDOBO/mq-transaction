@@ -1,22 +1,50 @@
 package com.order.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.common.common.MsgCode;
 import com.common.common.ResponseMessage;
-import com.common.exception.OrderBizException;
+import com.common.domain.OrderItemRecordDO;
 import com.common.utils.IdWorker;
+import com.item.api.service.ItemService;
 import com.order.entity.OrderEntity;
 import com.order.enums.OrderStatusEnum;
+import com.order.exception.OrderBizException;
 import com.order.mapper.OrderEntityMapper;
 import com.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderEntityMapper orderEntityMapper;
+    @Reference(version = "1.0.0",
+        application = "${dubbo.application.id}",
+        url = "dubbo://localhost:12345")
+    private ItemService itemService;
 
+    /**
+     * 用户下单操作
+     *
+     * 1. 生成订单
+     * 2. 记录购买人信息
+     *
+     * 对于dubbo服务调用，显然spring本地事务不再有效
+     *
+     * 因此要寻找一种方法替代spring本地事务，达到一样的效果
+     *
+     * 解决办法：可靠消息最终一致性
+     *
+     * @param userId
+     * @param itemId
+     * @return
+     */
+    @Transactional
     @Override
     public ResponseMessage<String> createOrder(Long userId, Long itemId) {
 
@@ -51,7 +79,31 @@ public class OrderServiceImpl implements OrderService {
          *
          */
 
+        // 调用购买记录服务
+        List<OrderItemRecordDO> list = new ArrayList<>();
+        OrderItemRecordDO oird = new OrderItemRecordDO();
+        oird.setItem_id(itemId);
+        oird.setOrder_id(orderId);
+        oird.setUsername(userId.toString().substring(5, 10));
+        oird.setPhone(1 + userId.toString().substring(3, 13));
+        list.add(oird);
+
+        itemService.recordOrderItem(list);
+
+        /*
+        如果这里抛出异常，那么本地spring事务只会作用于本地方法调用，
+        对于dubbo服务itemService.recordOrderItem(list); 并不会回滚
+        那么就会出现分布式事务问题
+         */
+//        if(true)
+//        	throw new OrderBizException(MsgCode.ERROR);
+
         return ResponseMessage.success(orderId.toString());
+    }
+
+    @Override
+    public ResponseMessage<OrderEntity> getOrder(Long orderId) {
+        return ResponseMessage.success(orderEntityMapper.selectByPrimaryKey(orderId));
     }
 
 }

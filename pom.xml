@@ -120,5 +120,7 @@
     <modules>
         <module>mq-transaction-common</module>
         <module>mq-transaction-order</module>
+        <module>mq-transaction-item-api</module>
+        <module>mq-transaction-item</module>
     </modules>
 </project>
