@@ -46,6 +46,7 @@ public class OrderServiceLocalMessageImpl implements OrderService {
      * 确保订单生成后，消息一定会发送出去；或者消息发送出去，订单也一定生成了
      * 这样保证了消息一定会投递
      *
+     * 整个过程都是通过本地服务完成的，没有调用其他服务
      *
      * 1. 生成订单
      * 2. 消息存储
