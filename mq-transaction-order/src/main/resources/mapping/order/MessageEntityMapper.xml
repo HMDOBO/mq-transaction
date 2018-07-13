@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.order.mapper.MessageEntityMapper">
+  <resultMap id="BaseResultMap" type="com.common.entity.MessageEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="queue_name" jdbcType="VARCHAR" property="queue_name" />
+    <result column="message_data_type" jdbcType="VARCHAR" property="message_data_type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="message_send_times" jdbcType="INTEGER" property="message_send_times" />
+    <result column="areadly_dead" jdbcType="VARCHAR" property="areadly_dead" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.common.entity.MessageEntity">
+    <result column="message_body" jdbcType="LONGVARCHAR" property="message_body" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, queue_name, message_data_type, create_time, message_send_times, areadly_dead, 
+    status
+  </sql>
+  <sql id="Blob_Column_List">
+    message_body
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mq_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mq_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.common.entity.MessageEntity">
+    insert into mq_message (id, queue_name, message_data_type, 
+      create_time, message_send_times, areadly_dead, 
+      status, message_body)
+    values (#{id,jdbcType=BIGINT}, #{queue_name,jdbcType=VARCHAR}, #{message_data_type,jdbcType=VARCHAR}, 
+      #{create_time,jdbcType=TIMESTAMP}, #{message_send_times,jdbcType=INTEGER}, #{areadly_dead,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{message_body,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.common.entity.MessageEntity">
+    insert into mq_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="queue_name != null">
+        queue_name,
+      </if>
+      <if test="message_data_type != null">
+        message_data_type,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="message_send_times != null">
+        message_send_times,
+      </if>
+      <if test="areadly_dead != null">
+        areadly_dead,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="message_body != null">
+        message_body,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="queue_name != null">
+        #{queue_name,jdbcType=VARCHAR},
+      </if>
+      <if test="message_data_type != null">
+        #{message_data_type,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="message_send_times != null">
+        #{message_send_times,jdbcType=INTEGER},
+      </if>
+      <if test="areadly_dead != null">
+        #{areadly_dead,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="message_body != null">
+        #{message_body,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.common.entity.MessageEntity">
+    update mq_message
+    <set>
+      <if test="queue_name != null">
+        queue_name = #{queue_name,jdbcType=VARCHAR},
+      </if>
+      <if test="message_data_type != null">
+        message_data_type = #{message_data_type,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="message_send_times != null">
+        message_send_times = #{message_send_times,jdbcType=INTEGER},
+      </if>
+      <if test="areadly_dead != null">
+        areadly_dead = #{areadly_dead,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="message_body != null">
+        message_body = #{message_body,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.common.entity.MessageEntity">
+    update mq_message
+    set queue_name = #{queue_name,jdbcType=VARCHAR},
+      message_data_type = #{message_data_type,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      message_send_times = #{message_send_times,jdbcType=INTEGER},
+      areadly_dead = #{areadly_dead,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      message_body = #{message_body,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.common.entity.MessageEntity">
+    update mq_message
+    set queue_name = #{queue_name,jdbcType=VARCHAR},
+      message_data_type = #{message_data_type,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      message_send_times = #{message_send_times,jdbcType=INTEGER},
+      areadly_dead = #{areadly_dead,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

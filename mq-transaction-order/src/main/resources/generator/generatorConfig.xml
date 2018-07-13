@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <!-- mybatis-generator:generate -->
 <generatorConfiguration>
-	<properties resource="jdbc.properties"/>
     <context id="spring-boot-mybatis-generator"  targetRuntime="MyBatis3">
     	<!-- plugin -->
     	<plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
@@ -15,16 +14,16 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="${spring.datasource.driver-class-name}"
-        				connectionURL="${spring.datasource.url}"
-        				userId="${spring.datasource.username}"
-        				password="${spring.datasource.password}">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        				connectionURL="jdbc:mysql://192.168.25.201:3306/mq_transaction"
+        				userId="root"
+        				password="root9918">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!-- 生成模型的包名和位置-->
-        <javaModelGenerator targetPackage="com.order.entity" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.common.entity" targetProject="../mq-transaction-common/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -37,10 +36,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="mq_order" domainObjectName="OrderEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true" />
-        </table>
-        <table tableName="mq_user" domainObjectName="UserEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        <table tableName="mq_message" domainObjectName="MessageEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="true" />
         </table>
     </context>

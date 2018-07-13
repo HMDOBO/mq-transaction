@@ -5,6 +5,7 @@ import com.common.utils.IdWorker;
 import com.order.entity.OrderEntity;
 import com.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     @Autowired
+    @Qualifier("normalOrderService")
+//    @Qualifier("localMessageOrderService")
     private OrderService orderService;
 
     @RequestMapping("create")
@@ -20,9 +23,9 @@ public class OrderController {
         Long userId = IdWorker.getId();
         Long itemId = 1L;
 
-        ResponseMessage<String> message = orderService.createOrder(userId, itemId);
+        ResponseMessage<String> result = orderService.createOrder(userId, itemId);
 
-        return message;
+        return result;
     }
 
     @RequestMapping("getOrderInfo")

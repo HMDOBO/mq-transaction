@@ -18,15 +18,21 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+/**
+ * 订单服务实现
+ *
+ * 简单服务调用，出现分布式事务场景模拟
+ */
+@Service("normalOrderService")
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    private OrderEntityMapper orderEntityMapper;
     @Reference(version = "1.0.0",
         application = "${dubbo.application.id}",
         url = "dubbo://localhost:12345")
     private ItemService itemService;
+    @Autowired
+    private OrderEntityMapper orderEntityMapper;
+
 
     /**
      * 用户下单操作

@@ -77,6 +77,11 @@
                             <version>${mysql-connector-java.version}</version>
                         </dependency>
                     </dependencies>
+                    <configuration>
+                        <configurationFile>${project.basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
+                        <verbose>true</verbose>
+                        <overwrite>true</overwrite>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -113,6 +118,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.28</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
