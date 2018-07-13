@@ -21,7 +21,7 @@ public class OrderController {
     @RequestMapping("create")
     public ResponseMessage<String> createOrder() {
         Long userId = IdWorker.getId();
-        Long itemId = 1L;
+        Long itemId = 1017703866482876418L;
 
         ResponseMessage<String> result = orderService.createOrder(userId, itemId);
 

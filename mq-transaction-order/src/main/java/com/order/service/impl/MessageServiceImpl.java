@@ -1,7 +1,6 @@
 package com.order.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.common.common.Constants;
 import com.common.common.MsgCode;
 import com.common.domain.BuyRecordMessage;
 import com.common.domain.OrderItemRecordDO;
@@ -34,12 +33,15 @@ public class MessageServiceImpl implements MessageService {
      */
     @Override
     public Long saveLocalMessageToDB(List<OrderItemRecordDO> list) {
-        String msg = JSON.toJSONString(list);
 
         MessageEntity message = new MessageEntity();
         Long messageId = IdWorker.getId();
         message.setId(messageId);
         message.setQueue_name(QueueNameEnum.LOCAL_BUY_RECORD_QUEUE.getValue());
+
+        BuyRecordMessage buyRecordMessage = convertListToBuyRecordMessage(list, messageId);
+        String msg = JSON.toJSONString(buyRecordMessage);
+
         message.setMessage_body(msg);
         message.setMessage_data_type(OrderItemRecordDO.class.getName());
         message.setMessage_send_times(1);
@@ -60,13 +62,19 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void sendLocalBuyRecordMessage(List<OrderItemRecordDO> list, Long messageId) {
 
+        BuyRecordMessage buyRecordMessage = convertListToBuyRecordMessage(list, messageId);
+
+        buyRecordMsgProducerService.sendMessage(JSON.toJSONString(buyRecordMessage));
+    }
+
+    @Override
+    public BuyRecordMessage convertListToBuyRecordMessage(List<OrderItemRecordDO> list, Long messageId) {
+
         BuyRecordMessage buyRecordMessage = new BuyRecordMessage();
         buyRecordMessage.setMessageId(messageId);
         buyRecordMessage.setList(list);
         buyRecordMessage.setQueueName(QueueNameEnum.LOCAL_BUY_RECORD_QUEUE.getValue());
 
-        buyRecordMsgProducerService.sendMessage(JSON.toJSONString(buyRecordMessage));
+        return buyRecordMessage;
     }
-
-
 }
