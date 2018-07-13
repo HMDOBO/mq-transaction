@@ -23,7 +23,7 @@ import java.util.List;
  *
  * 简单服务调用，出现分布式事务场景模拟
  */
-@Service("normalOrderService")
+//@Service("normalOrderService")    // 测试mq可靠消息，将dubbo有关调用注掉
 public class OrderServiceImpl implements OrderService {
 
     @Reference(version = "1.0.0",

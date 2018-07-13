@@ -1,9 +1,13 @@
 package com.order.service;
 
+import com.common.domain.OrderItemRecordDO;
+
+import java.util.List;
+
 public interface MessageService {
 
-    void saveLocalMessageToDB(String msg);
+    Long saveLocalMessageToDB(List<OrderItemRecordDO> list);
 
-    void sendLocalBuyRecordMessage(String msg);
+    void sendLocalBuyRecordMessage(List<OrderItemRecordDO> list, Long messageId);
 
 }

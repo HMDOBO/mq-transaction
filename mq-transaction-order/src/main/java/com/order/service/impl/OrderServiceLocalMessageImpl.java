@@ -17,6 +17,13 @@ import java.util.List;
  * 订单服务实现
  *
  * 本地消息服务，完成可靠消息最终一致性
+ *
+ * 为了更直观的测试可靠消息最终一致，现在把订单服务调用item服务的关联去掉，
+ * dubbo暂时去掉，通过mq消息保证数据统一
+ * 步骤：
+ * 1. application.properties去掉dubbo配置
+ * 2. com.order.service.impl.OrderServiceImpl类里面调用dubbo服务注掉
+ *
  */
 @Service("localMessageOrderService")
 public class OrderServiceLocalMessageImpl implements OrderService {
@@ -58,13 +65,12 @@ public class OrderServiceLocalMessageImpl implements OrderService {
 
         // 生成消息
         List<OrderItemRecordDO> buyRecordList = orderCommonService.generateMessage(itemId, orderId);
-        String message = JSON.toJSONString(buyRecordList);
 
         // 可靠消息存储
-        messageService.saveLocalMessageToDB(message);
+        Long messageId = messageService.saveLocalMessageToDB(buyRecordList);
 
         // 可靠消息发送，如果失败，还有消息重发机制
-        messageService.sendLocalBuyRecordMessage(message);
+        messageService.sendLocalBuyRecordMessage(buyRecordList, messageId);
 
         // TODO 整个过程任何一步出现异常都不会影响数据最终一致性
 

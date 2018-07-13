@@ -15,7 +15,8 @@ public class MsgCode implements Serializable {
     public static final MsgCode ERROR = new MsgCode(200100, "失败");
 
     // 系统服务通用异常
-    public static final MsgCode INSERT_RESULT_0 = new MsgCode(200101, "失败");
+    public static final MsgCode INSERT_RESULT_0 = new MsgCode(200101, "数据库新增失败");
+    public static final MsgCode UPDATE_RESULT_0 = new MsgCode(200102, "数据库更新失败");
 
     // 用户服务状态码
     public static final MsgCode TOKEN_ILLEGAL = new MsgCode(2002001, "token非法");

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     @Autowired
-    @Qualifier("normalOrderService")
-//    @Qualifier("localMessageOrderService")
+//    @Qualifier("normalOrderService")
+    @Qualifier("localMessageOrderService")
     private OrderService orderService;
 
     @RequestMapping("create")

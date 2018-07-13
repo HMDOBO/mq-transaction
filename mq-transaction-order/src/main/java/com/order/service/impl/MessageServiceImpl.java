@@ -1,9 +1,13 @@
 package com.order.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.common.common.Constants;
 import com.common.common.MsgCode;
+import com.common.domain.BuyRecordMessage;
 import com.common.domain.OrderItemRecordDO;
-import com.common.enmus.MessageStatusEnum;
+import com.common.enmus.MessageDeadStatusEnum;
+import com.common.enmus.MessageSendStatusEnum;
+import com.common.enmus.QueueNameEnum;
 import com.common.entity.MessageEntity;
 import com.common.utils.IdWorker;
 import com.order.exception.OrderBizException;
@@ -12,6 +16,8 @@ import com.order.mq.producer.BuyRecordMsgProducerService;
 import com.order.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -23,33 +29,43 @@ public class MessageServiceImpl implements MessageService {
 
     /**
      * 消息存储到本地数据库
-     *
-     * @param msg
+     * @param list
+     * @return
      */
     @Override
-    public void saveLocalMessageToDB(String msg) {
+    public Long saveLocalMessageToDB(List<OrderItemRecordDO> list) {
+        String msg = JSON.toJSONString(list);
 
         MessageEntity message = new MessageEntity();
-        message.setId(IdWorker.getId());
-        message.setQueue_name(Constants.LOCAL_BUY_RECORD_QUEUE);
+        Long messageId = IdWorker.getId();
+        message.setId(messageId);
+        message.setQueue_name(QueueNameEnum.LOCAL_BUY_RECORD_QUEUE.getValue());
         message.setMessage_body(msg);
         message.setMessage_data_type(OrderItemRecordDO.class.getName());
         message.setMessage_send_times(1);
-        message.setAreadly_dead(MessageStatusEnum.NODEAD.name());
+        message.setAreadly_dead(MessageDeadStatusEnum.NODEAD.name());
+        message.setStatus(MessageSendStatusEnum.WAITING.name());
 
         if (messageEntityMapper.insertSelective(message) <= 0)
             throw new OrderBizException(MsgCode.INSERT_RESULT_0);
 
+        return messageId;
     }
 
     /**
      * 消息发送到ActiveMQ
-     *
-     * @param msg
+     * @param list
+     * @param messageId
      */
     @Override
-    public void sendLocalBuyRecordMessage(String msg) {
-        buyRecordMsgProducerService.sendMessage(msg);
+    public void sendLocalBuyRecordMessage(List<OrderItemRecordDO> list, Long messageId) {
+
+        BuyRecordMessage buyRecordMessage = new BuyRecordMessage();
+        buyRecordMessage.setMessageId(messageId);
+        buyRecordMessage.setList(list);
+        buyRecordMessage.setQueueName(QueueNameEnum.LOCAL_BUY_RECORD_QUEUE.getValue());
+
+        buyRecordMsgProducerService.sendMessage(JSON.toJSONString(buyRecordMessage));
     }
 
 
