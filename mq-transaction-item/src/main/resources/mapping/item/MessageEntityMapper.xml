@@ -6,6 +6,7 @@
     <result column="queue_name" jdbcType="VARCHAR" property="queue_name" />
     <result column="message_data_type" jdbcType="VARCHAR" property="message_data_type" />
     <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="edit_time" />
     <result column="message_send_times" jdbcType="INTEGER" property="message_send_times" />
     <result column="areadly_dead" jdbcType="VARCHAR" property="areadly_dead" />
     <result column="status" jdbcType="VARCHAR" property="status" />
@@ -14,7 +15,7 @@
     <result column="message_body" jdbcType="LONGVARCHAR" property="message_body" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, queue_name, message_data_type, create_time, message_send_times, areadly_dead, 
+    id, queue_name, message_data_type, create_time, edit_time, message_send_times, areadly_dead, 
     status
   </sql>
   <sql id="Blob_Column_List">
@@ -34,11 +35,13 @@
   </delete>
   <insert id="insert" parameterType="com.common.entity.MessageEntity">
     insert into mq_message (id, queue_name, message_data_type, 
-      create_time, message_send_times, areadly_dead, 
-      status, message_body)
+      create_time, edit_time, message_send_times, 
+      areadly_dead, status, message_body
+      )
     values (#{id,jdbcType=BIGINT}, #{queue_name,jdbcType=VARCHAR}, #{message_data_type,jdbcType=VARCHAR}, 
-      #{create_time,jdbcType=TIMESTAMP}, #{message_send_times,jdbcType=INTEGER}, #{areadly_dead,jdbcType=VARCHAR}, 
-      #{status,jdbcType=VARCHAR}, #{message_body,jdbcType=LONGVARCHAR})
+      #{create_time,jdbcType=TIMESTAMP}, #{edit_time,jdbcType=TIMESTAMP}, #{message_send_times,jdbcType=INTEGER}, 
+      #{areadly_dead,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{message_body,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.common.entity.MessageEntity">
     insert into mq_message
@@ -54,6 +57,9 @@
       </if>
       <if test="create_time != null">
         create_time,
+      </if>
+      <if test="edit_time != null">
+        edit_time,
       </if>
       <if test="message_send_times != null">
         message_send_times,
@@ -81,6 +87,9 @@
       <if test="create_time != null">
         #{create_time,jdbcType=TIMESTAMP},
       </if>
+      <if test="edit_time != null">
+        #{edit_time,jdbcType=TIMESTAMP},
+      </if>
       <if test="message_send_times != null">
         #{message_send_times,jdbcType=INTEGER},
       </if>
@@ -107,6 +116,9 @@
       <if test="create_time != null">
         create_time = #{create_time,jdbcType=TIMESTAMP},
       </if>
+      <if test="edit_time != null">
+        edit_time = #{edit_time,jdbcType=TIMESTAMP},
+      </if>
       <if test="message_send_times != null">
         message_send_times = #{message_send_times,jdbcType=INTEGER},
       </if>
@@ -127,6 +139,7 @@
     set queue_name = #{queue_name,jdbcType=VARCHAR},
       message_data_type = #{message_data_type,jdbcType=VARCHAR},
       create_time = #{create_time,jdbcType=TIMESTAMP},
+      edit_time = #{edit_time,jdbcType=TIMESTAMP},
       message_send_times = #{message_send_times,jdbcType=INTEGER},
       areadly_dead = #{areadly_dead,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
@@ -138,6 +151,7 @@
     set queue_name = #{queue_name,jdbcType=VARCHAR},
       message_data_type = #{message_data_type,jdbcType=VARCHAR},
       create_time = #{create_time,jdbcType=TIMESTAMP},
+      edit_time = #{edit_time,jdbcType=TIMESTAMP},
       message_send_times = #{message_send_times,jdbcType=INTEGER},
       areadly_dead = #{areadly_dead,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR}

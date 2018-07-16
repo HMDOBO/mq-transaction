@@ -12,6 +12,8 @@ public class MessageEntity implements Serializable {
 
     private Date create_time;
 
+    private Date edit_time;
+
     private Integer message_send_times;
 
     private String areadly_dead;
@@ -52,6 +54,14 @@ public class MessageEntity implements Serializable {
 
     public void setCreate_time(Date create_time) {
         this.create_time = create_time;
+    }
+
+    public Date getEdit_time() {
+        return edit_time;
+    }
+
+    public void setEdit_time(Date edit_time) {
+        this.edit_time = edit_time;
     }
 
     public Integer getMessage_send_times() {
@@ -96,6 +106,7 @@ public class MessageEntity implements Serializable {
         sb.append(", queue_name=").append(queue_name);
         sb.append(", message_data_type=").append(message_data_type);
         sb.append(", create_time=").append(create_time);
+        sb.append(", edit_time=").append(edit_time);
         sb.append(", message_send_times=").append(message_send_times);
         sb.append(", areadly_dead=").append(areadly_dead);
         sb.append(", status=").append(status);

@@ -46,7 +46,7 @@ public class MessageServiceImpl implements MessageService {
         message.setMessage_data_type(OrderItemRecordDO.class.getName());
         message.setMessage_send_times(1);
         message.setAreadly_dead(MessageDeadStatusEnum.NODEAD.name());
-        message.setStatus(MessageSendStatusEnum.WAITING.name());
+        message.setStatus(MessageSendStatusEnum.SENDING.name());
 
         if (messageEntityMapper.insertSelective(message) <= 0)
             throw new OrderBizException(MsgCode.INSERT_RESULT_0);
