@@ -19,4 +19,10 @@ public interface MessageFilter {
      */
     Map<String, MessageEntity> selectSendingTimeOutMessage(int pageSize, int maxHandlerPageCount);
 
+    /**
+     * 重新发送符合超时规则的消息
+     * @param messageMap
+     */
+    void sendEligibleMessage(Map<String, MessageEntity> messageMap);
+
 }

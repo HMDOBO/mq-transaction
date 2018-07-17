@@ -23,4 +23,9 @@ public class MessageServiceImpl implements MessageService {
         if (messageEntityMapper.updateByPrimaryKeySelective(messageEntity) <= 0)
             throw new ItemBizException(MsgCode.UPDATE_RESULT_0);
     }
+
+	@Override
+	public MessageEntity getMessageInfo(Long messageId) {
+		return messageEntityMapper.selectByPrimaryKey(messageId);
+	}
 }

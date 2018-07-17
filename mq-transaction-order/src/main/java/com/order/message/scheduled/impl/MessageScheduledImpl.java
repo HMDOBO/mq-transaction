@@ -17,12 +17,12 @@ public class MessageScheduledImpl implements MessageScheduled {
     public void handleSendingTimeOutMessage() {
 
         // 1. 查询需要发送的消息集合
-        int pageSize = 500;
-        int maxHandlerPageCount = 3;
+        int pageSize = 500; // 每页查询多少条
+        int maxHandlerPageCount = 3;    // 查询最大页数
         Map<String, MessageEntity> messageMap = messageFilter.selectSendingTimeOutMessage(pageSize, maxHandlerPageCount);
 
         // 2. 单个发送消息
-
+        messageFilter.sendEligibleMessage(messageMap);
     }
 
 }

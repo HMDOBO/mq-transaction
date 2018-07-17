@@ -1,8 +1,9 @@
 package com.order.mq.producer.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.common.domain.OrderItemRecordDO;
 import com.order.mq.producer.BuyRecordMsgProducerService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,8 @@ import javax.jms.Queue;
 @SuppressWarnings("ALL")
 @Component
 public class BuyRecordMsgProducerServiceImpl implements BuyRecordMsgProducerService {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(BuyRecordMsgProducerServiceImpl.class);
 
     @Autowired
     private JmsMessagingTemplate jmsMessagingTemplate;
@@ -21,7 +24,7 @@ public class BuyRecordMsgProducerServiceImpl implements BuyRecordMsgProducerServ
 
     @Override
     public void sendMessage(String message) {
-        System.out.println("=========消息发送成功===========：" + message);
         this.jmsMessagingTemplate.convertAndSend(this.localBuyRecordQueue, message);
+        LOG.info("=========消息发送成功===========：" + message);
     }
 }

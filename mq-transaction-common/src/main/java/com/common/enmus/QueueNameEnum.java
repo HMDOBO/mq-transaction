@@ -2,6 +2,9 @@ package com.common.enmus;
 
 import com.common.common.Constants;
 
+/**
+ * 消息队列名称枚举
+ */
 public enum QueueNameEnum {
 
     LOCAL_BUY_RECORD_QUEUE(Constants.LOCAL_BUY_RECORD_QUEUE, "订单本地消息服务队列"),

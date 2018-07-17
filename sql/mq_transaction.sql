@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50635
 File Encoding         : 65001
 
-Date: 2018-07-09 16:09:02
+Date: 2018-07-17 14:07:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,10 +30,6 @@ CREATE TABLE `mq_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品表';
 
 -- ----------------------------
--- Records of mq_item
--- ----------------------------
-
--- ----------------------------
 -- Table structure for mq_item_user_record
 -- ----------------------------
 DROP TABLE IF EXISTS `mq_item_user_record`;
@@ -47,10 +43,6 @@ CREATE TABLE `mq_item_user_record` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录商品购买信息';
 
 -- ----------------------------
--- Records of mq_item_user_record
--- ----------------------------
-
--- ----------------------------
 -- Table structure for mq_message
 -- ----------------------------
 DROP TABLE IF EXISTS `mq_message`;
@@ -60,15 +52,12 @@ CREATE TABLE `mq_message` (
   `message_body` text COMMENT '消息内容',
   `message_data_type` varchar(100) DEFAULT NULL COMMENT '消息数据类型',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `edit_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '上次编辑时间',
   `message_send_times` int(6) DEFAULT NULL COMMENT '消息发送次数',
   `areadly_dead` varchar(20) DEFAULT NULL COMMENT '是否死亡',
   `status` varchar(20) DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='可靠消息表';
-
--- ----------------------------
--- Records of mq_message
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for mq_order
@@ -89,10 +78,6 @@ CREATE TABLE `mq_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- ----------------------------
--- Records of mq_order
--- ----------------------------
-
--- ----------------------------
 -- Table structure for mq_user
 -- ----------------------------
 DROP TABLE IF EXISTS `mq_user`;
@@ -104,7 +89,3 @@ CREATE TABLE `mq_user` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
-
--- ----------------------------
--- Records of mq_user
--- ----------------------------

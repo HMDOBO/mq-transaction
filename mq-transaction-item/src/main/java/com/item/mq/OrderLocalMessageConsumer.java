@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.common.common.Constants;
 import com.common.domain.BuyRecordMessage;
 import com.item.api.service.ItemService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderLocalMessageConsumer {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(OrderLocalMessageConsumer.class);
 
     @Autowired
     private ItemService itemService;
@@ -21,7 +25,7 @@ public class OrderLocalMessageConsumer {
     @JmsListener(destination = Constants.LOCAL_BUY_RECORD_QUEUE)
     public void receiveMessage(String msg) {
 
-        System.out.println("=======接收到消息=======" + msg);
+    	LOG.info("商品购买记录服务接收到消息：" + msg);
 
         BuyRecordMessage message = JSON.parseObject(msg, BuyRecordMessage.class);
 

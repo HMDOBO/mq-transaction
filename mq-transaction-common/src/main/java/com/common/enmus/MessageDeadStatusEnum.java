@@ -1,5 +1,8 @@
 package com.common.enmus;
 
+/**
+ * 消息是否死亡枚举
+ */
 public enum MessageDeadStatusEnum {
 
     NODEAD("未死亡"), DEAD("死亡");

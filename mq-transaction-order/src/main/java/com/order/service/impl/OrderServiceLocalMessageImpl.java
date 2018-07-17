@@ -10,6 +10,7 @@ import com.order.service.OrderCommonService;
 import com.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class OrderServiceLocalMessageImpl implements OrderService {
      * @param itemId
      * @return
      */
+    @Transactional
     @Override
     public ResponseMessage<String> createOrder(Long userId, Long itemId) {
         // 查询item
